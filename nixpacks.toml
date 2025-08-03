@@ -1,0 +1,21 @@
+[phases.setup]
+commands = [
+  "echo 'Installing python'",
+  "curl -fsSL https://install.python-poetry.org | python3 -",
+]
+
+[phases.install]
+commands = [
+  "pip install -r requirements.txt"
+]
+
+[phases.build]
+commands = []
+
+[phases.start]
+commands = [
+  "python main.py"
+]
+
+[env]
+PYTHONUNBUFFERED = "1"
