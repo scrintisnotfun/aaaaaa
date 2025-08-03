@@ -5,8 +5,8 @@ import os
 from flask import Flask, jsonify
 from threading import Thread
 
-DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN")
-CHANNEL_ID = 1400497545532276746  # Replace with your Discord channel ID
+DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN")  # Must be set in Railway env vars
+CHANNEL_ID = 1400497545532276746  # Your Discord channel ID
 
 app = Flask(__name__)
 pet_servers = []
@@ -27,9 +27,8 @@ def parse_pet_embed(embed):
             m = re.search(r'TeleportToPlaceInstance\((\d+),\s*"([\w-]+)', field.value)
             if m:
                 placeId = m.group(1)
-                jobId2 = m.group(2)
             else:
-                placeId = jobId2 = None
+                placeId = None
 
     if name and jobId and placeId:
         return {
@@ -67,7 +66,7 @@ def recent_pets():
     return jsonify(filtered)
 
 def run_flask():
-    port = int(os.environ.get("PORT", 8080))  # Railway sets PORT env var dynamically
+    port = int(os.environ.get("PORT", 8080))  # Railway provides PORT dynamically
     app.run(host='0.0.0.0', port=port)
 
 if __name__ == "__main__":
